@@ -70,7 +70,7 @@ put_field(N, {regex, Pat, Opt}) -> <<?put_tagname(11, N), (put_cstring(Pat))/bin
 put_field(N, {javascript, {}, Code}) -> <<?put_tagname(13, N), (put_string(Code))/binary>>;
 put_field(N, {javascript, Env, Code}) -> <<?put_tagname(15, N), (put_closure(Code, Env))/binary>>;
 put_field(N, {mongostamp, Inc, Time}) -> <<?put_tagname(17, N), ?put_int32(Inc), ?put_int32(Time)>>;
-put_field(N, UnixTime = {_, _, _}) -> <<?put_tagname(9, N), (put_unixtime(UnixTime))/binary>>;
+put_field(N, UnixTime = {A, B, C}) when is_integer(A), is_integer(B), is_integer(C) -> <<?put_tagname(9, N), (put_unixtime(UnixTime))/binary>>;
 put_field(N, V) when is_float(V) -> <<?put_tagname(1, N), ?put_float(V)>>;
 put_field(N, V) when is_binary(V) -> <<?put_tagname(2, N), (put_string(V))/binary>>;
 put_field(N, V) when is_tuple(V) -> <<?put_tagname(3, N), (put_document(V))/binary>>;
